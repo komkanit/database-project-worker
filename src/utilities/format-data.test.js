@@ -131,7 +131,7 @@ test('Should split real html to expected array', () => {
       data: ['-', '-', 58.00]
     }
   ];
-  // const result = expectedAns;
-  // expect(result).toHaveLength(4);
-  // expect(result).toEqual(expectedAns);
+  const result = [];
+  expect(result).toHaveLength(4);
+  expect(result).toEqual(expectedAns);
 });
