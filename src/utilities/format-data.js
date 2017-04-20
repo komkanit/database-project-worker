@@ -1,6 +1,6 @@
 import { fetchHtml } from '../utilities';
 
-export const logBody = async (url) => {
-  const body = await fetchHtml(url);
-  console.log(body);
+export const bodyToArray = async (url, fetch = fetchHtml) => {
+  const body = await fetch(url);
+  return body.split('');
 };
