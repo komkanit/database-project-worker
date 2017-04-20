@@ -13,7 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "config": "^1.25.1",
-    "node-fetch": "^1.6.3"
+    "node-fetch": "^1.6.3",
+    "x-ray": "^2.3.2"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",

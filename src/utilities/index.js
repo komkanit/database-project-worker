@@ -1,2 +1,2 @@
 export { fetchHtml } from './request';
-export { bodyToArray } from './format-data';
+export { bodyToArray, changeInsideTagToArray } from './format-data';
