@@ -1,0 +1,1 @@
+export { fetchHtml } from './request';
