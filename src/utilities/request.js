@@ -1,4 +1,6 @@
 var fetch = require('node-fetch');
 
-export const fetchHtml = (url) =>
-  fetch(url).then((response) => response.text())
+export const fetchHtml = async (url) => {
+  const response = await fetch(url);
+  return response.text();
+}
