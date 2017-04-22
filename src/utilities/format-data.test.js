@@ -1,4 +1,4 @@
-import { bodyToArray, changeInsideTagToArray } from '../utilities';
+import { bodyToArray, changeInsideTagToArray, changeDataTableToArray } from '../utilities';
 
 const mockFetchHtml = () => '<p>testword<p>';
 
@@ -131,7 +131,7 @@ test('Should split real html to expected array', () => {
       data: ['-', '-', 58.00]
     }
   ];
-  const result = [];
+  const result = changeDataTableToArray(mockhtml);
   expect(result).toHaveLength(4);
   expect(result).toEqual(expectedAns);
 });
