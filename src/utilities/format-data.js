@@ -12,7 +12,7 @@ export const changeInsideTagToArray = (body, targetTag, subTag) => (
   x(body, targetTag, [[subTag]])
 );
 
-export function changeDataTableToArray(html){
+export const changeDataTableToArray = (html) => {
   let data = [];
   x(html, 'tr', [['td']])((err, d) => {
     data = d;
