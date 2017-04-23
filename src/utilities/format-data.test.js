@@ -137,6 +137,6 @@ test('Should split real html to expected array', () => {
 });
 
 test('nameToID should change text to number', () => {
-  const ans = nameToID("มณฑล");
+  const ans = nameToID('มณฑล');
   expect(ans).toEqual(14442);
-})
+});
