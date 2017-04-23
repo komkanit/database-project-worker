@@ -38,6 +38,7 @@ jspm_packages
 
 # Sensitive files
 config/default.json
+.env
 
 # build files
 build
