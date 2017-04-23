@@ -32,13 +32,13 @@ export function changeDataTableToArray(html){
   dataArray.splice(0, 2);
   const dataObj = dataArray.filter((d) => (d[0] !== '')).map((arr) => {
     return {
-      farmName: arr[0].replace(/\s\s+/g, ' '),
-      address: arr[1].replace(/  +/g, ' '),
-      province: arr[2].replace('จ.', ''),
-      tel: arr[3].replace('โทร', '').replace('.', ''),
+      farmName: arr[0].replace(/\s\s+/g, ' ').replace(/\s+$/g, ''),
+      address: arr[1].replace(/  +/g, ' ').replace(/\s+$/g, ''),
+      province: arr[2].replace('จ.', '').replace(/\s+/g, '').replace(/\s+$/g, ''),
+      tel: arr[3].replace('โทร', '').replace('.', '').replace(/\s+/g, ''),
       year: year,
       month: month,
-      data: arr.slice(4, arr.length).map(data => (isNaN(parseFloat(data)) ? '-' : data))
+      data: arr.slice(4, arr.length).map(data => (isNaN(parseFloat(data)) ? '-' : Math.trunc(parseFloat(data))))
     };
   });
   return dataObj;
