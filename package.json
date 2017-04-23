@@ -12,7 +12,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "config": "^1.25.1",
     "dotenv": "^4.0.0",
     "node-fetch": "^1.6.3",
     "pg": "^6.1.5",

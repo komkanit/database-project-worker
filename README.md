@@ -3,12 +3,17 @@ this repository create for mining website to create database for project
 
 ### Getting Started
 - run command `npm install` for install packages and dependencies
-- config your application `config/default.json`
+- config your application `.env`
 
-```json
-{
-  "WEB_URL": "your website"
-}
+```
+WEB_URL=
+DB_USER=
+DB_PASSWORD=
+DB_NAME=
+DB_HOST=
+DB_PORT=
+DB_MAX=
+DB_TIME=
 ```
 
 ### Available Commands
