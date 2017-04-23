@@ -1,4 +1,4 @@
-import { bodyToArray, changeInsideTagToArray, changeDataTableToArray } from '../utilities';
+import { bodyToArray, changeInsideTagToArray, changeDataTableToArray, nameToID } from '../utilities';
 
 const mockFetchHtml = () => '<p>testword<p>';
 
@@ -134,4 +134,9 @@ test('Should split real html to expected array', () => {
   const result = changeDataTableToArray(mockhtml);
   expect(result).toHaveLength(4);
   expect(result).toEqual(expectedAns);
+});
+
+test('nameToID should change text to number', () => {
+  const ans = nameToID('มณฑล');
+  expect(ans).toEqual(14442);
 });
