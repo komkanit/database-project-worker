@@ -22,23 +22,22 @@ export const changeDataTableToArray = (html) => {
   const dataArray = data.reduce((arr, x) => {
     x.forEach((value, i) => {
       arr[i] = arr[i] || [];
-      arr[i].push(value)
+      arr[i].push(value);
     });
     return arr;
   }, []);
   dataArray.reverse();
   const month = dataArray[0][1];
   dataArray.splice(0, 2);
-  const dataObj = dataArray.filter((d) => (d[0] !== '')).map((arr) => {
-    return {
+  const dataObj = dataArray.filter(d => (d[0] !== '')).map(arr => (
+    {
       farmName: arr[0].replace(/\s\s+/g, ' ').replace(/\s+$/g, ''),
-      address: arr[1].replace(/  +/g, ' ').replace(/\s+$/g, ''),
+      address: arr[1].replace(/ +/g, ' ').replace(/\s+$/g, ''),
       province: arr[2].replace('จ.', '').replace(/\s+/g, '').replace(/\s+$/g, ''),
       tel: arr[3].replace('โทร', '').replace('.', '').replace(/\s+/g, ''),
-      year: year,
-      month: month,
+      year,
+      month,
       data: arr.slice(4, arr.length).map(data => (isNaN(parseFloat(data)) ? '-' : Math.trunc(parseFloat(data))))
-    };
-  });
+    }));
   return dataObj;
-}
+};
