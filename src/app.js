@@ -1,5 +1,5 @@
-import { fetchHtml } from './src/utilities';
-import pool from './src/utilities/db-config';
+import { fetchHtml } from './utilities';
+import pool from './utilities/db-config';
 
 require('dotenv').config();
 
