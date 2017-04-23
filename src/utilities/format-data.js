@@ -17,6 +17,7 @@ export const changeDataTableToArray = (html) => {
   x(html, 'tr', [['td']])((err, d) => {
     data = d;
   });
+  data.splice(0, 2);
   const year = data[0][0].replace('ปี ', '');
   data.forEach(e => e.reverse());
   data.shift();

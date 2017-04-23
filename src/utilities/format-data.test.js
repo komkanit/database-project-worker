@@ -36,6 +36,16 @@ test('Should split html tag to array', () => {
 
 test('Should split real html to expected array', () => {
   const mockhtml = `
+    <table width="90%" border="0" cellspacing="2" cellpadding="5">
+      <tr>
+        <td width="87%">&nbsp;</td>
+        <td width="13%"><span class="xl66"><span class="xl68"><span class="xl69"><a href="http://www.oae.go.th/download/price/priceday/Mar60/swine.html"><< ข้อมูลเดือน มี.ค.60</a></span></span></span></td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><span class="xl66"><span class="xl68">หน่วย : บาท/กก.</span></span></td>
+      </tr>
+    </table>
     <table width="90%" border="0" cellspacing="0" cellpadding="5">
       <tr>
         <td colspan="2" rowspan="4" class="xl110" >ปี 2560</td>
