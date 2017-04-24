@@ -27,16 +27,16 @@ export const savePrice = (priceID, price, date, farmID, productID, poolFunc) => 
 
 export const insertData = async (farm, type, poolFunc = pool) => {
   try {
-    await saveFarm(farm, type, poolFunc);
+    // await saveFarm(farm, type, poolFunc);
     await Promise.all(
       farm.data.map(async (price, index) => {
         const farmID = nameToID(farm.farmName);
         const productID = nameToID(type);
         const date = getDate(farm.year, farm.month, index + 1);
-        if (date != null) {
+        const filteredPrice = (price === '-') ? 0 : price;
+        if (date != null && filteredPrice !== 0) {
           const priceID = mergeID([farmID, productID, nameToID(date)]);
-          const priceFilter = (price === '-') ? 0 : price;
-          await savePrice(priceID, priceFilter, date, farmID, productID, poolFunc);
+          await savePrice(priceID, filteredPrice, date, farmID, productID, poolFunc);
         }
       })
     );
