@@ -27,7 +27,7 @@ export const savePrice = (priceID, price, date, farmID, productID, poolFunc) => 
 
 export const insertData = async (farm, type, poolFunc = pool) => {
   try {
-    // await saveFarm(farm, type, poolFunc);
+    await saveFarm(farm, type, poolFunc);
     await Promise.all(
       farm.data.map(async (price, index) => {
         const farmID = nameToID(farm.farmName);
@@ -40,10 +40,9 @@ export const insertData = async (farm, type, poolFunc = pool) => {
         }
       })
     );
-    // await console.log(`Save ${farm.farmName} ${type} completed`);
     return 'completed';
   } catch (err) {
-    console.error('error running query', err);
+    console.error('[Error] running query:', err);
     return err;
   }
 };
