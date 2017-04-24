@@ -65,3 +65,6 @@ export const types = ['swine', 'broiler', 'shallots', 'eggs'];
 export const getMonth = (data, type) => (
   months.filter(month => month[type] === data)
 );
+export const getDate = (year, month, day) => (
+  `${parseInt(year, 10) - 543}-${getMonth(month, 'thai')[0].number}-${day}`
+);

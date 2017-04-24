@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --coverage -i --watch --no-cache",
     "dev": "babel-node ./src/app.js",
     "eslint": "eslint --quiet **/**/*.js **/*.js **.js"
   },
