@@ -9,14 +9,18 @@ import {
 
 require('dotenv').config();
 
+export const saveFarm = (farm, type, poolFunc) => (
+  poolFunc.query(`
+    INSERT INTO Farm (id, name, address, province, tel, type)
+    VALUES (${nameToID(farm.farmName)}, '${farm.farmName}', '${farm.address}', '${farm.province}', '${farm.tel}', '${type}');
+  `)
+);
+
 export const insertData = async (farm, type, poolFunc = pool) => {
   try {
-    const response = await poolFunc.query(`
-      INSERT INTO Farm (id, name, address, province, tel, type)
-      VALUES (${nameToID(farm.farmName)}, '${farm.farmName}', '${farm.address}', '${farm.province}', '${farm.tel}', '${type}');
-    `);
+    await saveFarm(farm, type, poolFunc);
     await console.log(`Save ${farm.farmName} completed`);
-    return response;
+    return 'completed';
   } catch (err) {
     console.error('error running query', err);
     return err;
