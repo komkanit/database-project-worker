@@ -45,6 +45,6 @@ export const changeDataTableToArray = (html) => {
 };
 
 export const nameToID = (name) => {
-  const ID = name.split('').reduce((sum, ch) => (sum + ch.charCodeAt(0)), 0);
-  return ID % 100000;
+  const ID = name.toString().split('').reduce((sum, ch) => (((sum * 31) + ch.charCodeAt(0)) % 999999), 0);
+  return ID;
 };

@@ -148,5 +148,11 @@ test('Should split real html to expected array', () => {
 
 test('nameToID should change text to number', () => {
   const ans = nameToID('มณฑล');
-  expect(ans).toEqual(14442);
+  expect(ans).toEqual(331893);
+  expect(nameToID('2016-11-29')).toEqual(508486);
+  expect(nameToID('2016-11-19')).toEqual(508455);
+  expect(nameToID('2016-11-28')).toEqual(508485);
+  expect(nameToID('2016-11-27')).toEqual(508484);
+  expect(nameToID('2016-11-2')).toEqual(80917);
+  expect(nameToID('2016-11-4')).toEqual(80919);
 });
