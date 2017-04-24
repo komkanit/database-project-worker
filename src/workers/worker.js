@@ -9,11 +9,11 @@ import {
 
 require('dotenv').config();
 
-export const insertData = async (farm, poolFunc = pool) => {
+export const insertData = async (farm, type, poolFunc = pool) => {
   try {
     const response = await poolFunc.query(`
-      INSERT INTO Farm (id, name, address, province, tel)
-      VALUES (${nameToID(farm.farmName)}, '${farm.farmName}', '${farm.address}', '${farm.province}', '${farm.tel}');
+      INSERT INTO Farm (id, name, address, province, tel, type)
+      VALUES (${nameToID(farm.farmName)}, '${farm.farmName}', '${farm.address}', '${farm.province}', '${farm.tel}', '${type}');
     `);
     await console.log(`Save ${farm.farmName} completed`);
     return response;
@@ -32,7 +32,7 @@ export const runWorker = () => {
       const html = await fetchHtml(url);
       const farms = changeDataTableToArray(html);
       return farms.map((farm) => {
-        insertData(farm);
+        insertData(farm, type);
         return farm;
       });
     })

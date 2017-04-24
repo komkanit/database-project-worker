@@ -13,9 +13,10 @@ test('Should data send to query format is correct', async () => {
   const mockPool = {
     query: queryMessage => queryMessage
   };
-  const response = await insertData(farm, mockPool);
+  const type = 'broiler';
+  const response = await insertData(farm, type, mockPool);
   expect(response.split(' ').join('')).toEqual(`
-    INSERT INTO Farm (id, name, address, province, tel)
-    VALUES (807, 'farmName', 'address', 'province', 'tel');
+    INSERT INTO Farm (id, name, address, province, tel, type)
+    VALUES (807, 'farmName', 'address', 'province', 'tel', 'broiler');
   `.split(' ').join(''));
 });
