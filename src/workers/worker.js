@@ -31,6 +31,14 @@ export const saveProduct = (id, productName, poolFunc) => (
     VALUES (${id}, '${productName}');
   `)
 );
+
+export const saveFarmProduct = (id, farmID, productID, poolFunc) => (
+  poolFunc.query(`
+    INSERT INTO FarmProduct (id, farm_id, product_id)
+    VALUES (${id}, ${farmID}, ${productID});
+  `)
+);
+
 export const insertData = async (farm, type, poolFunc = pool) => {
   try {
     const farmID = nameToID(farm.farmName);

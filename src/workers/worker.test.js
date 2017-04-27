@@ -1,4 +1,4 @@
-import { insertData, saveFarm, savePrice, saveProduct } from './worker';
+import { insertData, saveFarm, savePrice, saveProduct, saveFarmProduct } from './worker';
 
 const farm = {
   farmName: 'farmName',
@@ -40,5 +40,13 @@ test('Should data send to query Product format is correct', async () => {
   expect(response.split(' ').join('')).toEqual(`
     INSERT INTO Product (id, name)
     VALUES (100, 'productName');
+  `.split(' ').join(''));
+});
+
+test('Should data send to query FarmProduct format is correct', async () => {
+  const response = await saveFarmProduct(100100, 200, 100, mockPool);
+  expect(response.split(' ').join('')).toEqual(`
+    INSERT INTO FarmProduct (id, farm_id, product_id)
+    VALUES (100100, 200, 100);
   `.split(' ').join(''));
 });
