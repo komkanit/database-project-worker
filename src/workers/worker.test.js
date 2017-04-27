@@ -1,4 +1,4 @@
-import { insertData, saveFarm, savePrice } from './worker';
+import { insertData, saveFarm, savePrice, saveProduct } from './worker';
 
 const farm = {
   farmName: 'farmName',
@@ -32,4 +32,13 @@ test('Should data send to query price format is correct', async () => {
 
 test('Should insertData return completed', async () => {
   expect(await insertData(farm, type, mockPool)).toEqual('completed');
+});
+
+test('Should data send to query Product format is correct', async () => {
+  const productName = 'productName';
+  const response = await saveProduct(100, productName, mockPool);
+  expect(response.split(' ').join('')).toEqual(`
+    INSERT INTO Product (id, name)
+    VALUES (100, 'productName');
+  `.split(' ').join(''));
 });
