@@ -72,7 +72,7 @@ export const months = [
     max: 31
   }
 ];
-export const types = ['swine'];
+export const types = ['swine', 'broiler', 'casava', 'casava25', 'casava30', 'eggs', 'eggs3', 'eggs4'];
 export const getMonth = (data, type) => {
   const month = months.filter(month => month[type] === data);
   return (month.length > 0) ? month : [{ number: 9999, eng: 'error', max: -1 }];
