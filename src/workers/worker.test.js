@@ -15,10 +15,10 @@ const mockPool = {
 const type = 'broiler';
 
 test('Should data send to query farm format is correct', async () => {
-  const response = await saveFarm(farm, type, mockPool);
+  const response = await saveFarm(100, farm, mockPool);
   expect(response.split(' ').join('')).toEqual(`
-    INSERT INTO Farm (id, name, address, province, tel, type)
-    VALUES (199521, 'farmName', 'address', 'province', 'tel', 'broiler');
+    INSERT INTO Farm (id, name, address, province, tel)
+    VALUES (100, 'farmName', 'address', 'province', 'tel');
   `.split(' ').join(''));
 });
 

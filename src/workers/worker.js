@@ -11,10 +11,10 @@ import {
 
 require('dotenv').config();
 
-export const saveFarm = (farm, type, poolFunc) => (
+export const saveFarm = (id, farm, poolFunc) => (
   poolFunc.query(`
-    INSERT INTO Farm (id, name, address, province, tel, type)
-    VALUES (${nameToID(farm.farmName)}, '${farm.farmName}', '${farm.address}', '${farm.province}', '${farm.tel}', '${type}');
+    INSERT INTO Farm (id, name, address, province, tel)
+    VALUES (${id}, '${farm.farmName}', '${farm.address}', '${farm.province}', '${farm.tel}');
   `)
 );
 
@@ -27,16 +27,16 @@ export const savePrice = (priceID, price, date, farmID, productID, poolFunc) => 
 
 export const insertData = async (farm, type, poolFunc = pool) => {
   try {
-    // await saveFarm(farm, type, poolFunc);
+    const farmID = nameToID(farm.farmName);
+    const productID = nameToID(type);
+    await saveFarm(farmID, farm, poolFunc);
     await Promise.all(
       farm.data.map(async (price, index) => {
-        const farmID = nameToID(farm.farmName);
-        const productID = nameToID(type);
         const date = getDate(farm.year, farm.month, index + 1);
         const filteredPrice = (price === '-') ? 0 : price;
         if (date != null && filteredPrice !== 0) {
           const priceID = mergeID([farmID, productID, nameToID(date)]);
-          await savePrice(priceID, filteredPrice, date, farmID, productID, poolFunc);
+          // await savePrice(priceID, filteredPrice, date, farmID, productID, poolFunc);
         }
       })
     );
