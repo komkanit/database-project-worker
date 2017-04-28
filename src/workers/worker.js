@@ -18,10 +18,10 @@ export const saveFarm = (id, farm, poolFunc) => (
   `)
 );
 
-export const savePrice = (priceID, price, date, farmID, productID, poolFunc) => (
+export const savePrice = (priceID, price, poolFunc) => (
   poolFunc.query(`
-    INSERT INTO Price (price_id, farm_id, product_id, date, price)
-    VALUES (${priceID}, ${farmID}, ${productID}, '${date}', ${price});
+    INSERT INTO Price (price_id, price)
+    VALUES (${priceID}, ${price});
   `)
 );
 
@@ -52,7 +52,7 @@ export const insertData = async (farm, type, poolFunc = pool) => {
         const filteredPrice = (price === '-') ? 0 : price;
         if (date != null && filteredPrice !== 0) {
           const priceID = mergeID([farmID, productID, nameToID(date)]);
-          await savePrice(priceID, filteredPrice, date, farmID, productID, poolFunc);
+          await savePrice(priceID, filteredPrice, poolFunc);
         }
       })
     );

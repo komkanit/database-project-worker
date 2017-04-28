@@ -23,10 +23,10 @@ test('Should data send to query farm format is correct', async () => {
 });
 
 test('Should data send to query price format is correct', async () => {
-  const response = await savePrice(100, 100.15, '2017-10-1', 100, 100, mockPool);
+  const response = await savePrice(100, 100.15, mockPool);
   expect(response.split(' ').join('')).toEqual(`
-    INSERT INTO Price (price_id, farm_id, product_id, date, price)
-    VALUES (100, 100, 100, '2017-10-1', 100.15);
+    INSERT INTO Price (price_id, price)
+    VALUES (100, 100.15);
   `.split(' ').join(''));
 });
 
