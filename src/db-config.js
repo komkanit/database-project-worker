@@ -9,7 +9,7 @@ const config = {
   port: process.env.DB_PORT,
   max: parseInt(process.env.DB_MAX, 10),
   idleTimeoutMillis: parseInt(process.env.DB_TIME, 10),
-  ssl: process.env.DB_SSL
+  ssl: (process.env.DB_SSL === 'true')
 };
 
 const pool = new pg.Pool(config);

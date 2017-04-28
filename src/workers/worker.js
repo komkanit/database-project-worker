@@ -43,14 +43,16 @@ export const insertData = async (farm, type, poolFunc = pool) => {
   try {
     const farmID = nameToID(farm.farmName);
     const productID = nameToID(type);
+    await saveFarmProduct(mergeID([farmID, productID]), farmID, productID, poolFunc);
     await saveFarm(farmID, farm, poolFunc);
+    await saveProduct(productID, type, poolFunc);
     await Promise.all(
       farm.data.map(async (price, index) => {
         const date = getDate(farm.year, farm.month, index + 1);
         const filteredPrice = (price === '-') ? 0 : price;
         if (date != null && filteredPrice !== 0) {
           const priceID = mergeID([farmID, productID, nameToID(date)]);
-          // await savePrice(priceID, filteredPrice, date, farmID, productID, poolFunc);
+          await savePrice(priceID, filteredPrice, date, farmID, productID, poolFunc);
         }
       })
     );
@@ -60,19 +62,27 @@ export const insertData = async (farm, type, poolFunc = pool) => {
     return err;
   }
 };
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-export const runWorker = () => {
+export const runWorker = async () => {
   const year = 59;
-  types.map(type => (
-    months.map(async (month) => {
-      const url = `${process.env.WEB_URL}/download/price/priceday/${month.eng}${year}/${type}.html`;
-      const html = await fetchHtml(url);
-      const farms = changeDataTableToArray(html);
-      return farms.map((farm) => {
-        insertData(farm, type);
-        return farm;
-      });
-    })
-  ));
-  console.log('worker completed');
+  await Promise.all(
+    types.map(async type => (
+      Promise.all(months.map(async (month) => {
+        const url = `${process.env.WEB_URL}/download/price/priceday/${month.eng}${year}/${type}.html`;
+        const html = await fetchHtml(url);
+        await sleep(3000);
+        const farms = changeDataTableToArray(html);
+        return Promise.all(
+          farms.map(async (farm) => {
+            await insertData(farm, type);
+            return farm;
+          })
+        );
+      }))
+    ))
+  );
+  await console.log('worker completed');
 };
