@@ -25,6 +25,13 @@ export const savePrice = (priceID, price, poolFunc) => (
   `)
 );
 
+export const savePriceStamp = (priceID, farmProductID, date, poolFunc) => (
+  poolFunc.query(`
+    INSERT INTO PriceStamp (id, farmproductid, date)
+    VALUES (${priceID}, ${farmProductID}, '${date}');
+  `)
+);
+
 export const saveProduct = (id, productName, poolFunc) => (
   poolFunc.query(`
     INSERT INTO Product (id, name)

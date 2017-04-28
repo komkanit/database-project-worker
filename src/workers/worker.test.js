@@ -1,4 +1,4 @@
-import { insertData, saveFarm, savePrice, saveProduct, saveFarmProduct } from './worker';
+import { insertData, saveFarm, savePrice, saveProduct, saveFarmProduct, savePriceStamp } from './worker';
 
 const farm = {
   farmName: 'farmName',
@@ -27,6 +27,14 @@ test('Should data send to query price format is correct', async () => {
   expect(response.split(' ').join('')).toEqual(`
     INSERT INTO Price (price_id, price)
     VALUES (100, 100.15);
+  `.split(' ').join(''));
+});
+
+test('Should data send to query priceStamp format is correct', async () => {
+  const response = await savePriceStamp(12345, 1000, '2017-3-10', mockPool);
+  expect(response.split(' ').join('')).toEqual(`
+    INSERT INTO PriceStamp (id, farmproductid, date)
+    VALUES (12345, 1000, '2017-3-10');
   `.split(' ').join(''));
 });
 
