@@ -50,16 +50,21 @@ export const insertData = async (farm, type, poolFunc = pool) => {
   try {
     const farmID = nameToID(farm.farmName);
     const productID = nameToID(type);
-    await saveFarmProduct(mergeID([farmID, productID]), farmID, productID, poolFunc);
-    await saveFarm(farmID, farm, poolFunc);
-    await saveProduct(productID, type, poolFunc);
+    // await saveFarmProduct(mergeID([farmID, productID]), farmID, productID, poolFunc);
+    // await saveFarm(farmID, farm, poolFunc);
+    // await saveProduct(productID, type, poolFunc);
     await Promise.all(
       farm.data.map(async (price, index) => {
         const date = getDate(farm.year, farm.month, index + 1);
         const filteredPrice = (price === '-') ? 0 : price;
         if (date != null && filteredPrice !== 0) {
-          const priceID = mergeID([farmID, productID, nameToID(date)]);
+          const farmProductID = mergeID([farmID, productID]);
+          const dateID = nameToID(date);
+          const priceID = mergeID([farmProductID, dateID]);
+          console.log(priceID, filteredPrice);
           await savePrice(priceID, filteredPrice, poolFunc);
+          console.log(dateID, farmProductID, date);
+          await savePriceStamp(priceID, farmProductID, date, poolFunc);
         }
       })
     );
@@ -74,13 +79,13 @@ function sleep(ms) {
 }
 
 export const runWorker = async () => {
-  const year = 59;
+  const year = 58;
   await Promise.all(
-    types.map(async type => (
-      Promise.all(months.map(async (month) => {
+    types.map(async (type) => {
+      await Promise.all(months.map(async (month) => {
         const url = `${process.env.WEB_URL}/download/price/priceday/${month.eng}${year}/${type}.html`;
         const html = await fetchHtml(url);
-        await sleep(3000);
+        await sleep(2000);
         const farms = changeDataTableToArray(html);
         return Promise.all(
           farms.map(async (farm) => {
@@ -88,8 +93,8 @@ export const runWorker = async () => {
             return farm;
           })
         );
-      }))
-    ))
+      }));
+    })
   );
   await console.log('worker completed');
 };
