@@ -54,35 +54,35 @@ export const saveFarmProduct = (id, farmID, productID, poolFunc) => (
 
 export const saveType = (typeID, type, poolFunc) => (
   poolFunc.query(`
-    INSERT INTO PriceStamp (id, name)
+    INSERT INTO Type (id, name)
     VALUES (${typeID}, '${type}');
   `)
 );
 
 export const saveDate = (dateID, date, poolFunc) => (
   poolFunc.query(`
-    INSERT INTO PriceStamp (id, date)
+    INSERT INTO Date (id, date)
     VALUES (${dateID}, '${date}');
   `)
 );
 
 export const saveProvince = (provinceID, province, poolFunc) => (
   poolFunc.query(`
-    INSERT INTO PriceStamp (id, name)
+    INSERT INTO Province (id, name)
     VALUES (${provinceID}, '${province}');
   `)
 );
 
 export const saveAddress = (addressID, provinceID, address, poolFunc) => (
   poolFunc.query(`
-    INSERT INTO PriceStamp (id, province_id, name)
+    INSERT INTO Address (id, province_id, name)
     VALUES (${addressID}, ${provinceID}, '${address}');
   `)
 );
 
 export const saveData = (id, addressID, productID, value1, value2, value3, year, poolFunc) => (
   poolFunc.query(`
-    INSERT INTO PriceStamp (id, address_id, product_id, value1, value2, value3, year)
+    INSERT INTO Data (id, address_id, product_id, value1, value2, value3, year)
     VALUES (${id}, ${addressID}, ${productID}, ${value1}, ${value2}, ${value3}, ${year});
   `)
 );
@@ -103,10 +103,9 @@ export const insertData = async (farm, type, kind, poolFunc = pool) => {
           const farmProductID = mergeID([farmID, productID]);
           const dateID = nameToID(date);
           const priceID = mergeID([farmProductID, dateID]);
-          console.log(priceID, filteredPrice);
           await savePrice(priceID, filteredPrice, poolFunc);
-          console.log(dateID, farmProductID, date);
-          await savePriceStamp(priceID, farmProductID, date, poolFunc);
+          await savePriceStamp(priceID, farmProductID, dateID, poolFunc);
+          await saveDate(dateID, date, poolFunc);
         }
       })
     );
@@ -121,11 +120,13 @@ function sleep(ms) {
 }
 
 export const runWorker = async () => {
-  const year = 58;
+  const year = 59;
   await Promise.all(
     types.map(async (type) => {
       const subType = type.type;
-      return Promise.all(
+      console.log(subType, nameToID(subType));
+      await saveType(nameToID(subType), subType, pool);
+      await Promise.all(
         type.kinds.map(async (kind) => {
           await Promise.all(months.map(async (month) => {
             const url = `${process.env.WEB_URL}/download/price/priceday/${month.eng}${year}/${kind}.html`;

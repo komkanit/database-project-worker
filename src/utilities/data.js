@@ -75,7 +75,7 @@ export const months = [
 export const types = [
   {
     type: 'animal',
-    kind: [
+    kinds: [
       'swine',
       'broiler',
       'eggs',
@@ -85,7 +85,7 @@ export const types = [
   },
   {
     type: 'plant',
-    kind: [
+    kinds: [
       'casava',
       'casava25',
       'casava30'
