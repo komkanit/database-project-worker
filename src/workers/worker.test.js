@@ -13,6 +13,7 @@ const mockPool = {
   query: queryMessage => queryMessage
 };
 const type = 'broiler';
+const kind = 'test';
 
 test('Should data send to query farm format is correct', async () => {
   const response = await saveFarm(100, farm, mockPool);
@@ -31,23 +32,24 @@ test('Should data send to query price format is correct', async () => {
 });
 
 test('Should data send to query priceStamp format is correct', async () => {
-  const response = await savePriceStamp(12345, 1000, '2017-3-10', mockPool);
+  const response = await savePriceStamp(12345, 1000, 2017310, mockPool);
   expect(response.split(' ').join('')).toEqual(`
-    INSERT INTO PriceStamp (id, farmproductid, date)
-    VALUES (12345, 1000, '2017-3-10');
+    INSERT INTO PriceStamp (id, farmproductid, date_id)
+    VALUES (12345, 1000, 2017310);
   `.split(' ').join(''));
 });
 
 test('Should insertData return completed', async () => {
-  expect(await insertData(farm, type, mockPool)).toEqual('completed');
+  expect(await insertData(farm, type, kind, mockPool)).toEqual('completed');
 });
 
 test('Should data send to query Product format is correct', async () => {
   const productName = 'productName';
-  const response = await saveProduct(100, productName, mockPool);
+  const typeID = 1111;
+  const response = await saveProduct(100, productName, typeID, mockPool);
   expect(response.split(' ').join('')).toEqual(`
-    INSERT INTO Product (id, name)
-    VALUES (100, 'productName');
+    INSERT INTO Product (id, name, type_id)
+    VALUES (100, 'productName', 1111);
   `.split(' ').join(''));
 });
 

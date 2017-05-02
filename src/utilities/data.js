@@ -73,14 +73,24 @@ export const months = [
   }
 ];
 export const types = [
-  'swine',
-  'broiler',
-  'casava',
-  'casava25',
-  'casava30',
-  'eggs',
-  'eggs3',
-  'eggs4'
+  {
+    type: 'animal',
+    kind: [
+      'swine',
+      'broiler',
+      'eggs',
+      'eggs3',
+      'eggs4'
+    ]
+  },
+  {
+    type: 'plant',
+    kind: [
+      'casava',
+      'casava25',
+      'casava30'
+    ]
+  }
 ];
 
 export const getMonth = (data, type) => {
